@@ -1,0 +1,1 @@
+﻿global using ShowcaseProject.Products.Domain.SeedWork;
