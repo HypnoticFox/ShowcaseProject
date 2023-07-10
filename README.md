@@ -1,5 +1,5 @@
 # ShowcaseProject (W.I.P.)
-This project is still a work in progress.
+This project is still a work in progress.  
 Finished prototype of ShowcaseProject.Products service
 
 Already Completed:
