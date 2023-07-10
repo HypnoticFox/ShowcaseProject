@@ -16,7 +16,7 @@ public sealed class ProductStatus : EnumerationWithCode
     }
 
     public static IEnumerable<ProductStatus> List() =>
-        new[] { Concept, Available, Unavailable, Discontinued };
+        GetAll<ProductStatus>();
 
     public static ProductStatus FromId(int id)
     {

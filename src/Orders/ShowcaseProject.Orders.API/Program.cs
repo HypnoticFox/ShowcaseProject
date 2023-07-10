@@ -4,10 +4,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddCustomCors(
-    allowedOrigins: builder.Configuration.GetSection("Configuration:Cors:AllowedOrigins").Get<string[]>() ?? throw new ConfigurationException("'Cors:AllowedOrigins' configuration missing!"),
-    unsafeMode: builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName == "Test"
-    );
+if (builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName == "Test")
+{
+    builder.Services.AddUnsafeCors();
+}
+else
+{
+    builder.Services.AddCustomCors(
+        allowedOrigins: builder.Configuration.GetSection("Configuration:Cors:AllowedOrigins").Get<string[]>() ?? throw new Exception("'Cors:AllowedOrigins' configuration missing!")
+        );
+}
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -26,5 +26,7 @@ internal sealed class ProductStatusEntityTypeConfiguration
         productStatusConfiguration.Property(o => o.Name)
             .HasMaxLength(200)
             .IsRequired();
+
+        productStatusConfiguration.HasData(ProductStatus.List());
     }
 }

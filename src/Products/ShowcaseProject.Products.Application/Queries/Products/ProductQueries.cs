@@ -1,34 +1,37 @@
-﻿using LinqToDB;
+﻿
 using ShowcaseProject.Products.Domain.AggregatesModel.ProductAggegrate;
-using System.Security.Cryptography;
+using SqlKata.Execution;
 
 namespace ShowcaseProject.Products.Application.Queries.Products;
 
 public sealed class ProductQueries : IProductQueries
 {
-    private readonly IProductsQueryContext db;
+    private readonly ProductQueryFactory db;
 
-    public ProductQueries(IProductsQueryContext context)
+    public ProductQueries(ProductQueryFactory context)
     {
         db = context;
     }
 
-    public Task<ProductDto?> GetProductAsync(int productId)
+    public async Task<ProductDto?> GetProductAsync(int productId)
     {
-        var query = db.Products
-                        .Where(p => p.Id == productId);
+        var query = db.Query("products.products")
+            .Where("Id", productId);
 
-        return query.FirstOrDefaultAsync();
+        var result = await query.FirstOrDefaultAsync<ProductDto>();
+        return result;
     }
 
-    public Task<List<ProductDto>> GetAllProductsAsync(bool availableOnly = false)
+    public async Task<List<ProductDto>> GetAllProductsAsync(bool availableOnly = false)
     {
-        var query = db.Products.AsQueryable();
+        var query = db.Query("products.products");
         if (availableOnly)
         {
-            query = query.Where(p => p.ProductStatusId == ProductStatus.Available.Id);
+            query = query.Where("ProductStatusId", ProductStatus.Available.Id);
         }
 
-        return query.ToListAsync();
+        var result = await query.GetAsync<ProductDto>();
+
+        return result.ToList();
     }
 }

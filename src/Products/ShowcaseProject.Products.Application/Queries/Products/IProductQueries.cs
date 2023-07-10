@@ -1,4 +1,5 @@
-﻿namespace ShowcaseProject.Products.Application.Queries.Products;
+﻿
+namespace ShowcaseProject.Products.Application.Queries.Products;
 
 public interface IProductQueries
 {
