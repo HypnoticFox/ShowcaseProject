@@ -1,9 +1,10 @@
 # ShowcaseProject (W.I.P.)
 This project is still a work in progress.
-Currently unable to run.
-Currently working on ShowcaseProject.Products.Application
+Finished prototype of ShowcaseProject.Products service
 
 Already Completed:
 
+ - [x] ShowcaseProject.Products.API
+ - [x] ShowcaseProject.Products.Application
  - [x] ShowcaseProject.Products.Domain
  - [x] ShowcaseProject.Products.Infrastructure
