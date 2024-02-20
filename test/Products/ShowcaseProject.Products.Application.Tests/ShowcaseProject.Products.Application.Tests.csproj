@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Products\ShowcaseProject.Products.Domain\ShowcaseProject.Products.Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\Products\ShowcaseProject.Products.Application\ShowcaseProject.Products.Application.csproj" />
   </ItemGroup>
 
 </Project>

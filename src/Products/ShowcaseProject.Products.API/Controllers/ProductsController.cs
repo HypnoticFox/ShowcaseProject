@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using ShowcaseProject.Products.API.Responses;
 using ShowcaseProject.Products.Application.Commands;
 using ShowcaseProject.Products.Application.Queries.Products;
 
@@ -23,20 +25,21 @@ public sealed class ProductsController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ProductDto>> GetProduct(int id)
+    public async Task<ActionResult<ProductResponse>> GetProduct(int id)
     {
         var result = await _productQueries.GetProductAsync(id);
 
         if(result is null) return NotFound("");
 
-        return result;
+        return result.ToProductResponse();
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts(bool availableOnly = false)
+    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts(bool availableOnly = false)
     {
-        return await _productQueries.GetAllProductsAsync(availableOnly);
+        var productDtos = await _productQueries.GetAllProductsAsync(availableOnly);
+        return productDtos.ConvertAll(productDto => productDto.ToProductResponse());
     }
 
     [Route("Create")]
@@ -51,7 +54,7 @@ public sealed class ProductsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError("ProductsController.CreateProduct caught an exception.", ex);
+            _logger.LogError(ex, "ProductsController.CreateProduct caught an exception.");
             return BadRequest(ex.Message);
         }
     }
@@ -69,7 +72,7 @@ public sealed class ProductsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError("ProductsController.AddToStock caught an exception.", ex);
+            _logger.LogError(ex, "ProductsController.AddToStock caught an exception.");
             return BadRequest(ex.Message);
         }
     }
@@ -87,7 +90,7 @@ public sealed class ProductsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError("ProductsController.RemoveFromStock caught an exception.", ex);
+            _logger.LogError(ex, "ProductsController.RemoveFromStock caught an exception.");
             return BadRequest(ex.Message);
         }
     }
@@ -105,7 +108,7 @@ public sealed class ProductsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError("ProductsController.SetAvailableStatus caught an exception.", ex);
+            _logger.LogError(ex, "ProductsController.SetAvailableStatus caught an exception.");
             return BadRequest(ex.Message);
         }
     }
@@ -123,7 +126,7 @@ public sealed class ProductsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError("ProductsController.SetUnavailableStatus caught an exception.", ex);
+            _logger.LogError(ex, "ProductsController.SetUnavailableStatus caught an exception.");
             return BadRequest(ex.Message);
         }
     }
@@ -141,7 +144,7 @@ public sealed class ProductsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError("ProductsController.SetDiscontinuedStatus caught an exception.", ex);
+            _logger.LogError(ex, "ProductsController.SetDiscontinuedStatus caught an exception.");
             return BadRequest(ex.Message);
         }
     }

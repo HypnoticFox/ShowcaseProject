@@ -157,6 +157,6 @@ public class ProductTests
         var product = new Product("Product A", "Description A", 10);
 
         // Act & Assert
-        var ex = Assert.Throws<ProductDomainException>(() => product.SetDiscontinuedStatus());
+        Assert.Throws<ProductDomainException>(() => product.SetDiscontinuedStatus());
     }
 }

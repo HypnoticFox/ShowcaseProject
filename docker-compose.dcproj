@@ -7,7 +7,7 @@
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>showcaseproject.products.api</DockerServiceName>
-    <DockerDevelopmentMode>Regular</DockerDevelopmentMode>
+    <DockerDevelopmentMode>Fast</DockerDevelopmentMode>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.yml" />
